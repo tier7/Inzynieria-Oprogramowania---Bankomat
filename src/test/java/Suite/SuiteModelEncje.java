@@ -1,4 +1,4 @@
-package Suite;
+package test.java.Suite;
 
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectPackages;
