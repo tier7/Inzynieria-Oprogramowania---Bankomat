@@ -1,0 +1,56 @@
+# === OS junk ===
+.DS_Store
+Thumbs.db
+
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# === VS Code (opcjonalnie) ===
+.vscode/
+
+# === Java build outputs ===
+*.class
+*.jar
+*.war
+*.ear
+
+# === Maven ===
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# === Gradle ===
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+
+# === Logs ===
+*.log
+
+# === Env / secrets ===
+.env
+*.keystore
+*.jks
+
+# === Test / coverage ===
+/coverage/
+*.exec
+*.lcov
+*.hprof
+
+# === Generated / temp ===
+tmp/
+temp/
+*.tmp
+*.swp
