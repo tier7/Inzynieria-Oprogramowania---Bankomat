@@ -1,5 +1,5 @@
-package main.java.Kontroler;
-import main.java.Komunikacja.Widok;
+package Kontroler;
+import Komunikacja.Widok;
 public class DrukowaniePotwierdzenia {
 
 	private String dataIGodzina;

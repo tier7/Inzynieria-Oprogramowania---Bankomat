@@ -1,6 +1,6 @@
-package main.java.Kontroler;
+package Kontroler;
 
-import main.java.Model.IModel;
+import Model.IModel;
 
 public abstract class IStrategiaEksportu {
 

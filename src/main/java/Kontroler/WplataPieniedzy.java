@@ -1,6 +1,6 @@
-package main.java.Kontroler;
+package Kontroler;
 
-import main.java.Model.IModel;
+import Model.IModel;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package main.java.Kontroler;
+package Kontroler;
 
 public interface IKontrolerPracownika {
 	void aktualizacjaZawartosciGotowki();

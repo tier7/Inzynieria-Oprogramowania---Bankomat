@@ -1,7 +1,7 @@
-package main.java.Kontroler;
+package Kontroler;
 
-import main.java.Komunikacja.Widok;
-import main.java.Model.*;
+import Komunikacja.Widok;
+import Model.*;
 
 import java.util.HashMap;
 import java.util.Map;

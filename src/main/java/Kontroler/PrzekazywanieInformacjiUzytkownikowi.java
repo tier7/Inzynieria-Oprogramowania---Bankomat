@@ -1,6 +1,6 @@
-package main.java.Kontroler;
+package Kontroler;
 
-import main.java.Komunikacja.Widok;
+import Komunikacja.Widok;
 public class PrzekazywanieInformacjiUzytkownikowi {
 
 	public void przekazanieInformacji(String komunikat) {
