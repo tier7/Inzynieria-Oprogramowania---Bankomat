@@ -29,6 +29,19 @@ Jeżeli nie chcesz instalować Mavena lokalnie, możesz uruchomić testy bezpoś
 2. Upewnij się, że IntelliJ rozpoznał plik `pom.xml` jako projekt Maven.
 3. Kliknij prawym na katalog `src/test/java` lub na klasę testową i wybierz **Run**.
 
+## Struktura katalogów i ustawienia IDE
+
+Projekt trzyma kod produkcyjny w standardowej strukturze Maven:
+
+- `src/main/java` (np. `src/main/java/Model/Sejf.java`)
+- `src/test/java` (np. `src/test/java/Model/SejfTest.java`)
+
+Jeśli IDE nie widzi klas z `src/main/java` (np. błąd `cannot find symbol class Sejf`),
+sprawdź czy katalogi są oznaczone poprawnie:
+
+1. Kliknij prawym na katalog `src/main/java` → **Mark Directory as** → **Sources Root**.
+2. Kliknij prawym na `src/test/java` → **Mark Directory as** → **Test Sources Root**.
+
 ## Uwagi o sieci
 
 Jeżeli środowisko blokuje pobieranie zależności z Maven Central (błąd 403),
