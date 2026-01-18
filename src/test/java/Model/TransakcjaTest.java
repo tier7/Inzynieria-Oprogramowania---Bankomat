@@ -1,5 +1,6 @@
 package Model;
 
+import main.java.Model.Transakcja;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

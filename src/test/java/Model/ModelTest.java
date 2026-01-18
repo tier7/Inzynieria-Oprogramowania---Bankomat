@@ -1,5 +1,9 @@
 package Model;
 
+import main.java.Model.IDAO;
+import main.java.Model.Model;
+import main.java.Model.RejestrTransakcji;
+import main.java.Model.Sejf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

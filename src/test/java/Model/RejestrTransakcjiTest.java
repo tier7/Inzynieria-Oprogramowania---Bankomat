@@ -1,5 +1,7 @@
-package Model;
+package test.java.Model;
 
+import main.java.Model.IDAO;
+import main.java.Model.RejestrTransakcji;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
