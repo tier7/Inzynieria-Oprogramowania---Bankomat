@@ -1,4 +1,4 @@
-package main.java.Model;
+package Model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;

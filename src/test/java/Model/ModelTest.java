@@ -1,4 +1,4 @@
-package main.java.Model;
+package Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("main.java.Model - logika biznesowa gotówki")
+@DisplayName("Model - logika biznesowa gotówki")
 @TestMethodOrder(OrderAnnotation.class)
 @Tag("gotowka")
 class ModelTest {
