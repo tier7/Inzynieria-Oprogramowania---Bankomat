@@ -1,7 +1,7 @@
-package main.java.Kontroler;
+package Kontroler;
 
-import main.java.Model.IModel;
-import main.java.Komunikacja.Widok;
+import Model.IModel;
+import Komunikacja.Widok;
 
 public class EksportDoPliku extends IStrategiaEksportu {
 

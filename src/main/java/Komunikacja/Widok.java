@@ -1,4 +1,4 @@
-package main.java.Komunikacja;
+package Komunikacja;
 
 public class Widok {
     public static void wyswietlanie(String klasa, String operacja, boolean czyDziala, String tresc) {

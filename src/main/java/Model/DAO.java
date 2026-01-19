@@ -1,6 +1,6 @@
-package main.java.Model;
+package Model;
 
-import main.java.Komunikacja.Widok;
+import Komunikacja.Widok;
 
 public class DAO implements IDAO {
 

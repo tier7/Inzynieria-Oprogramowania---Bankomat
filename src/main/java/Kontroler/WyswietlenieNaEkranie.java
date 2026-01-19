@@ -1,7 +1,7 @@
-package main.java.Kontroler;
+package Kontroler;
 
-import main.java.Komunikacja.Widok;
-import main.java.Model.IModel;
+import Komunikacja.Widok;
+import Model.IModel;
 
 public class WyswietlenieNaEkranie extends IStrategiaEksportu {
 

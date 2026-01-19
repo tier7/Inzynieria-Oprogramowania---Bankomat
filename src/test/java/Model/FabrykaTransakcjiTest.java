@@ -1,7 +1,7 @@
 package Model;
 
-import main.java.Model.FabrykaTransakcji;
-import main.java.Model.ITransakcja;
+import Model.FabrykaTransakcji;
+import Model.ITransakcja;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
