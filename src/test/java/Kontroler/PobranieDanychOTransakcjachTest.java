@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
@@ -45,6 +47,9 @@ class PobranieDanychOTransakcjachTest {
 
     @Mock
     private IModel model;
+
+    @InjectMocks
+    private PobranieDanychOTransakcjach kontroler;
 
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
@@ -151,5 +156,33 @@ class PobranieDanychOTransakcjachTest {
         // then
         verify(model).logowaniePracownik(NR_KARTY_EKSPORT, PIN_EKSPORT);
         assertNotNull(kontroler);
+    }
+
+    @Order(5)
+    @Test
+    @DisplayName("Powinno propagować wyjątek z logowania pracownika")
+    void powinnoPropagowacWyjatekZLogowaniaPracownika() {
+        // given
+        when(model.logowaniePracownik(NR_KARTY_ADMIN, PIN_ADMIN))
+                .thenThrow(new RuntimeException("Błąd logowania"));
+
+        // when
+        RuntimeException thrown = assertThrows(RuntimeException.class,
+                () -> new PobranieDanychOTransakcjach(model, NR_KARTY_ADMIN, PIN_ADMIN));
+
+        // then
+        assertEquals("Błąd logowania", thrown.getMessage());
+        verify(model).logowaniePracownik(NR_KARTY_ADMIN, PIN_ADMIN);
+    }
+
+    @Order(6)
+    @Test
+    @DisplayName("Powinno tworzyć kontroler przez InjectMocks")
+    void powinnoTworzycKontrolerPrzezInjectMocks() {
+        // when
+        assertNotNull(kontroler);
+
+        // then
+        verify(model).logowaniePracownik(0, 0);
     }
 }

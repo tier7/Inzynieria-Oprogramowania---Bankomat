@@ -25,10 +25,12 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -148,5 +150,26 @@ class WplataPieniedzyTest {
                 Arguments.of("Brak miejsca na gotówkę", false, true, 0),
                 Arguments.of("Nieudana weryfikacja w banku", true, false, 1)
         );
+    }
+
+    @Order(4)
+    @Test
+    @DisplayName("Powinno propagować wyjątek z księgowania wpłaty")
+    void powinnoPropagowacWyjatekZKsiegowaniaWplaty() {
+        // given
+        when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
+        when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(true);
+        when(model.weryfikacjaTransakcjiWBanku(DEKLAROWANA_KWOTA, NR_KARTY)).thenReturn(true);
+        doThrow(new IllegalStateException("Błąd księgowania"))
+                .when(model)
+                .ksiegowanieWplaty(anyInt(), anyInt(), anyBoolean(), anyMap());
+
+        // when
+        IllegalStateException thrown = assertThrows(IllegalStateException.class,
+                () -> new WplataPieniedzy(model, NR_KARTY, PIN));
+
+        // then
+        assertEquals("Błąd księgowania", thrown.getMessage());
+        verify(model).ksiegowanieWplaty(anyInt(), anyInt(), anyBoolean(), anyMap());
     }
 }
