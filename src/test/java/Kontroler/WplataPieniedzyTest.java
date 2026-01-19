@@ -1,10 +1,10 @@
 package Kontroler;
 
 import Model.IModel;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
@@ -42,24 +42,31 @@ import static org.mockito.Mockito.when;
 @Tag("mock")
 class WplataPieniedzyTest {
 
+    private static final int NR_KARTY = 111111;
+    private static final int PIN = 1234;
+    private static final int DEKLAROWANA_KWOTA = 1200;
+
     @Mock
     private IModel model;
 
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
     @BeforeAll
+    @DisplayName("Przygotowanie liczników przed wszystkimi testami")
     static void setUpBeforeAll() {
         // given
         AFTER_EACH_COUNTER.set(0);
     }
 
     @AfterEach
+    @DisplayName("Sprzątanie po pojedynczym teście")
     void tearDown() {
         // then
         AFTER_EACH_COUNTER.incrementAndGet();
     }
 
     @AfterAll
+    @DisplayName("Weryfikacja sprzątania po wszystkich testach")
     static void tearDownAfterAll() {
         // then
         assertTrue(AFTER_EACH_COUNTER.get() >= 1);
@@ -70,9 +77,9 @@ class WplataPieniedzyTest {
     @DisplayName("Powinno księgować wpłatę w scenariuszu pozytywnym")
     void powinnoKsiegowacWplateHappyPath() {
         // given
-        when(model.logowanieKlient(111111, 1234)).thenReturn(true);
+        when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
         when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(true);
-        when(model.weryfikacjaTransakcjiWBanku(1200, 111111)).thenReturn(true);
+        when(model.weryfikacjaTransakcjiWBanku(DEKLAROWANA_KWOTA, NR_KARTY)).thenReturn(true);
 
         ArgumentCaptor<Integer> kwotaCaptor = ArgumentCaptor.forClass(Integer.class);
         ArgumentCaptor<Integer> nrKartyCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -80,18 +87,18 @@ class WplataPieniedzyTest {
         ArgumentCaptor<Map<Integer, Integer>> banknotyCaptor = ArgumentCaptor.forClass(Map.class);
 
         // when
-        WplataPieniedzy sut = new WplataPieniedzy(model, 111111, 1234);
+        WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
 
         // then
         verify(model).ksiegowanieWplaty(kwotaCaptor.capture(), nrKartyCaptor.capture(),
                 potwierdzenieCaptor.capture(), banknotyCaptor.capture());
         verify(model, times(1)).ksiegowanieWplaty(anyInt(), anyInt(), anyBoolean(), anyMap());
 
-        assertNotNull(sut);
-        assertEquals(1200, kwotaCaptor.getValue());
+        assertNotNull(kontroler);
+        assertEquals(DEKLAROWANA_KWOTA, kwotaCaptor.getValue());
         assertTrue(potwierdzenieCaptor.getValue());
         assertEquals(12, banknotyCaptor.getValue().get(100));
-        assertEquals(111111, nrKartyCaptor.getValue());
+        assertEquals(NR_KARTY, nrKartyCaptor.getValue());
     }
 
     @Order(2)
@@ -106,12 +113,12 @@ class WplataPieniedzyTest {
         when(model.logowanieKlient(nrKarty, pin)).thenReturn(false);
 
         // when
-        WplataPieniedzy sut = new WplataPieniedzy(model, nrKarty, pin);
+        WplataPieniedzy kontroler = new WplataPieniedzy(model, nrKarty, pin);
 
         // then
         verify(model).logowanieKlient(nrKarty, pin);
         verifyNoMoreInteractions(model);
-        assertNotNull(sut);
+        assertNotNull(kontroler);
     }
 
     @Order(3)
@@ -121,19 +128,19 @@ class WplataPieniedzyTest {
     void niePowinnoKsiegowacWNegatywnychScenariuszach(String opis, boolean miejsce, boolean weryfikacja,
                                                      int oczekiwaneWeryfikacje) {
         // given
-        when(model.logowanieKlient(111111, 1234)).thenReturn(true);
+        when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
         when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(miejsce);
-        when(model.weryfikacjaTransakcjiWBanku(1200, 111111)).thenReturn(weryfikacja);
+        when(model.weryfikacjaTransakcjiWBanku(DEKLAROWANA_KWOTA, NR_KARTY)).thenReturn(weryfikacja);
 
         // when
-        WplataPieniedzy sut = new WplataPieniedzy(model, 111111, 1234);
+        WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
 
         // then
-        verify(model).logowanieKlient(111111, 1234);
+        verify(model).logowanieKlient(NR_KARTY, PIN);
         verify(model, times(1)).sprawdzenieMiejscaNaGotowke(anyMap());
-        verify(model, times(oczekiwaneWeryfikacje)).weryfikacjaTransakcjiWBanku(1200, 111111);
+        verify(model, times(oczekiwaneWeryfikacje)).weryfikacjaTransakcjiWBanku(DEKLAROWANA_KWOTA, NR_KARTY);
         verify(model, never()).ksiegowanieWplaty(anyInt(), anyInt(), anyBoolean(), anyMap());
-        assertNotNull(sut);
+        assertNotNull(kontroler);
     }
 
     static Stream<Arguments> negatywneScenariusze() {

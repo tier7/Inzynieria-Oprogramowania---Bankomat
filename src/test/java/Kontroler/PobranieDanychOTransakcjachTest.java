@@ -36,24 +36,34 @@ import static org.mockito.Mockito.when;
 @Tag("mock")
 class PobranieDanychOTransakcjachTest {
 
+    private static final int NR_KARTY_ADMIN = 999999;
+    private static final int PIN_ADMIN = 4321;
+    private static final int NR_KARTY_FILTROWANIE = 100000;
+    private static final int PIN_FILTROWANIE = 1111;
+    private static final int NR_KARTY_EKSPORT = 555555;
+    private static final int PIN_EKSPORT = 2222;
+
     @Mock
     private IModel model;
 
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
     @BeforeAll
+    @DisplayName("Przygotowanie liczników przed wszystkimi testami")
     static void setUpBeforeAll() {
         // given
         AFTER_EACH_COUNTER.set(0);
     }
 
     @AfterEach
+    @DisplayName("Sprzątanie po pojedynczym teście")
     void tearDown() {
         // then
         AFTER_EACH_COUNTER.incrementAndGet();
     }
 
     @AfterAll
+    @DisplayName("Weryfikacja sprzątania po wszystkich testach")
     static void tearDownAfterAll() {
         // then
         assertTrue(AFTER_EACH_COUNTER.get() >= 1);
@@ -68,18 +78,18 @@ class PobranieDanychOTransakcjachTest {
                 "Data=2025-01-02, Typ=WPLATA, Kwota=100",
                 "Data=2025-06-15, Typ=WPLATA, Kwota=300"
         };
-        when(model.logowaniePracownik(999999, 4321)).thenReturn(true);
+        when(model.logowaniePracownik(NR_KARTY_ADMIN, PIN_ADMIN)).thenReturn(true);
         when(model.pobranieWszystkichTransakcji()).thenReturn(rekordy);
 
         // when
-        PobranieDanychOTransakcjach sut = new PobranieDanychOTransakcjach(model, 999999, 4321);
-        String[] wynik = sut.pobranieListyOperacji();
+        PobranieDanychOTransakcjach kontroler = new PobranieDanychOTransakcjach(model, NR_KARTY_ADMIN, PIN_ADMIN);
+        String[] wynik = kontroler.pobranieListyOperacji();
 
         // then
-        verify(model).logowaniePracownik(999999, 4321);
+        verify(model).logowaniePracownik(NR_KARTY_ADMIN, PIN_ADMIN);
         verify(model, atLeastOnce()).pobranieWszystkichTransakcji();
 
-        assertNotNull(sut);
+        assertNotNull(kontroler);
         assertEquals(2, wynik.length);
         assertArrayEquals(rekordy, wynik);
     }
@@ -89,15 +99,15 @@ class PobranieDanychOTransakcjachTest {
     @DisplayName("Nie powinno pobierać transakcji bez logowania pracownika")
     void niePowinnoPobieracTransakcjiBezLogowania() {
         // given
-        when(model.logowaniePracownik(999999, 4321)).thenReturn(false);
+        when(model.logowaniePracownik(NR_KARTY_ADMIN, PIN_ADMIN)).thenReturn(false);
 
         // when
-        PobranieDanychOTransakcjach sut = new PobranieDanychOTransakcjach(model, 999999, 4321);
+        PobranieDanychOTransakcjach kontroler = new PobranieDanychOTransakcjach(model, NR_KARTY_ADMIN, PIN_ADMIN);
 
         // then
-        verify(model).logowaniePracownik(999999, 4321);
+        verify(model).logowaniePracownik(NR_KARTY_ADMIN, PIN_ADMIN);
         verify(model, never()).pobranieWszystkichTransakcji();
-        assertNotNull(sut);
+        assertNotNull(kontroler);
     }
 
     @Order(3)
@@ -109,20 +119,21 @@ class PobranieDanychOTransakcjachTest {
     @DisplayName("Powinno respektować wynik logowania pracownika")
     void powinnoRespektowacLogowaniePracownika(boolean czyZalogowano) {
         // given
-        when(model.logowaniePracownik(100000, 1111)).thenReturn(czyZalogowano);
+        when(model.logowaniePracownik(NR_KARTY_FILTROWANIE, PIN_FILTROWANIE)).thenReturn(czyZalogowano);
         when(model.pobranieWszystkichTransakcji()).thenReturn(new String[0]);
 
         // when
-        PobranieDanychOTransakcjach sut = new PobranieDanychOTransakcjach(model, 100000, 1111);
+        PobranieDanychOTransakcjach kontroler = new PobranieDanychOTransakcjach(
+                model, NR_KARTY_FILTROWANIE, PIN_FILTROWANIE);
 
         // then
-        verify(model).logowaniePracownik(100000, 1111);
+        verify(model).logowaniePracownik(NR_KARTY_FILTROWANIE, PIN_FILTROWANIE);
         if (czyZalogowano) {
             verify(model, atLeastOnce()).pobranieWszystkichTransakcji();
         } else {
             verify(model, never()).pobranieWszystkichTransakcji();
         }
-        assertNotNull(sut);
+        assertNotNull(kontroler);
     }
 
     @Order(4)
@@ -131,14 +142,14 @@ class PobranieDanychOTransakcjachTest {
     @DisplayName("Powinno obsłużyć różne opcje eksportu")
     void powinnoObsluzycRozneOpcjeEksportu(int opcja) {
         // given
-        when(model.logowaniePracownik(555555, 2222)).thenReturn(false);
-        PobranieDanychOTransakcjach sut = new PobranieDanychOTransakcjach(model, 555555, 2222);
+        when(model.logowaniePracownik(NR_KARTY_EKSPORT, PIN_EKSPORT)).thenReturn(false);
+        PobranieDanychOTransakcjach kontroler = new PobranieDanychOTransakcjach(model, NR_KARTY_EKSPORT, PIN_EKSPORT);
 
         // when
-        assertDoesNotThrow(() -> sut.eksportDanych(opcja));
+        assertDoesNotThrow(() -> kontroler.eksportDanych(opcja));
 
         // then
-        verify(model).logowaniePracownik(555555, 2222);
-        assertNotNull(sut);
+        verify(model).logowaniePracownik(NR_KARTY_EKSPORT, PIN_EKSPORT);
+        assertNotNull(kontroler);
     }
 }
