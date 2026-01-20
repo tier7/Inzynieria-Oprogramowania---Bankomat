@@ -12,6 +12,7 @@ public class PobranieDanychOTransakcjach {
 	private String zakresDat;
 	private String typOperacji;
 	private String[] listaWynikow;
+	private boolean czyZalogowano;
 
 	private IStrategiaEksportu strategiaEksportu;
 
@@ -24,6 +25,7 @@ public class PobranieDanychOTransakcjach {
 		this.typOperacji = "";
 		this.listaWynikow = new String[0];
 		this.strategiaEksportu = null;
+		this.czyZalogowano = false;
 
 		if (!uwierzytelnieniePracownika()) return;
 
@@ -38,7 +40,7 @@ public class PobranieDanychOTransakcjach {
 	}
 
 	private boolean uwierzytelnieniePracownika() {
-		boolean czyZalogowano = model.logowaniePracownik(nrKarty, pin);
+		czyZalogowano = model.logowaniePracownik(nrKarty, pin);
 		Widok.wyswietlanie("PobranieDanychOTransakcjach", "uwierzytelnieniePracownika", czyZalogowano,
 				czyZalogowano ? "Uwierzytelniono pracownika" : "Błąd uwierzytelnienia");
 		return czyZalogowano;
@@ -57,6 +59,11 @@ public class PobranieDanychOTransakcjach {
 	}
 
 	public String[] pobranieListyOperacji() {
+		if (!czyZalogowano) {
+			listaWynikow = new String[0];
+			return listaWynikow;
+		}
+
 		String[] wszystkie = model.pobranieWszystkichTransakcji();
 		if (wszystkie == null) wszystkie = new String[0];
 
@@ -121,6 +128,10 @@ public class PobranieDanychOTransakcjach {
 	}
 
 	public void eksportDanych(int opcja) {
+		if (!czyZalogowano) {
+			return;
+		}
+
 		if (opcja == 1) {
 			strategiaEksportu = new WyswietlenieNaEkranie(model);
 			Widok.wyswietlanie("PobranieDanychOTransakcjach", "eksportDanych", true,
