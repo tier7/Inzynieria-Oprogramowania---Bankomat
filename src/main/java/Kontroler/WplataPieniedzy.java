@@ -32,8 +32,7 @@ public class WplataPieniedzy {
 		this.wprowadzenieKwoty(1200);
 		this.wprowadzenieBanknotow();
 
-		boolean czyJestMiejsce = this.model.sprawdzenieMiejscaNaGotowke(this.banknoty);
-		if (!czyJestMiejsce) {
+		if (!this.model.sprawdzenieMiejscaNaGotowke(this.banknoty)) {
 			this.zwrotBanknotow();
 			return;
 		}

@@ -16,6 +16,10 @@ public class PobranieDanychOTransakcjach {
 
 	private IStrategiaEksportu strategiaEksportu;
 
+	public PobranieDanychOTransakcjach(IModel model) {
+		this(model, 0, 0);
+	}
+
 	public PobranieDanychOTransakcjach(IModel model, int nrKarty, int pin) {
 		this.model = model;
 		this.nrKarty = nrKarty;
