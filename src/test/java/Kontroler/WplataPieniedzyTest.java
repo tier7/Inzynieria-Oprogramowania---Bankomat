@@ -4,6 +4,7 @@ import Model.IModel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -32,6 +33,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -63,6 +65,12 @@ class WplataPieniedzyTest {
     static void setUpBeforeAll() {
         // given
         AFTER_EACH_COUNTER.set(0);
+    }
+
+    @BeforeEach
+    @DisplayName("Czyszczenie interakcji z mockami przed testem")
+    void clearMockInvocations() {
+        clearInvocations(model);
     }
 
     @AfterEach
@@ -178,5 +186,13 @@ class WplataPieniedzyTest {
         // then
         assertEquals("Błąd księgowania", thrown.getMessage());
         verify(model).ksiegowanieWplaty(anyInt(), anyInt(), anyBoolean(), anyMap());
+    }
+
+    @Order(5)
+    @Test
+    @DisplayName("Powinno tworzyć kontroler przez InjectMocks")
+    void powinnoTworzycKontrolerPrzezInjectMocks() {
+        // then
+        assertNotNull(kontrolerZInjectMocks);
     }
 }
