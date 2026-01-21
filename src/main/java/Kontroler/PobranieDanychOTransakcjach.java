@@ -15,6 +15,7 @@ public class PobranieDanychOTransakcjach {
 
 	private IStrategiaEksportu strategiaEksportu;
 
+	@Inject
 	public PobranieDanychOTransakcjach(IModel model) {
 		this(model, 0, 0);
 	}
