@@ -112,7 +112,7 @@ class ModelTest {
         assertEquals(przed + 1, po.length);
         assertEquals(12, banknoty.get(100));
         assertTrue(po[po.length - 1].contains("Kwota=200"));
-        assertTrue(po[po.length - 1].contains("Nadawca=111111"));
+        assertTrue(po[po.length - 1].contains("Konto:111111"));
     }
 
     static Stream<Arguments> mapyBanknotow() {
