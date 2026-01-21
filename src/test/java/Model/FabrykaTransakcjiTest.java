@@ -1,7 +1,5 @@
 package Model;
 
-import Model.FabrykaTransakcji;
-import Model.ITransakcja;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -17,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("FabrykaTransakcji - tworzenie transakcji")
+@DisplayName("FabrykaTransakcji: tworzenie transakcji")
 @TestMethodOrder(OrderAnnotation.class)
 @Tag("transakcje")
 class FabrykaTransakcjiTest {

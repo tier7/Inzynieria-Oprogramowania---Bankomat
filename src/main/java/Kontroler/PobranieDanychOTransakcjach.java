@@ -2,6 +2,9 @@ package Kontroler;
 
 import Model.IModel;
 import Komunikacja.Widok;
+
+import javax.inject.Inject;
+
 public class PobranieDanychOTransakcjach {
 
 	private IModel model;
@@ -197,4 +200,6 @@ public class PobranieDanychOTransakcjach {
 
 		return rekord.substring(start, end).trim();
 	}
+
+
 }

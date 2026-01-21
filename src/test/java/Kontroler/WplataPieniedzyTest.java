@@ -4,7 +4,6 @@ import Model.IModel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -17,7 +16,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -33,7 +31,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -54,9 +51,6 @@ class WplataPieniedzyTest {
     @Mock
     private IModel model;
 
-    @InjectMocks
-    private WplataPieniedzy kontroler;
-
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
     @BeforeAll
@@ -64,12 +58,6 @@ class WplataPieniedzyTest {
     static void setUpBeforeAll() {
         // given
         AFTER_EACH_COUNTER.set(0);
-    }
-
-    @BeforeEach
-    @DisplayName("Czyszczenie interakcji z mockami przed testem")
-    void clearMockInvocations() {
-        clearInvocations(model);
     }
 
     @AfterEach
@@ -101,7 +89,7 @@ class WplataPieniedzyTest {
         ArgumentCaptor<Map<Integer, Integer>> banknotyCaptor = ArgumentCaptor.forClass(Map.class);
 
         // when
-        kontroler.wykonajWplate(NR_KARTY, PIN);
+        WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
 
         // then
         verify(model).ksiegowanieWplaty(kwotaCaptor.capture(), nrKartyCaptor.capture(),
@@ -127,7 +115,7 @@ class WplataPieniedzyTest {
         when(model.logowanieKlient(nrKarty, pin)).thenReturn(false);
 
         // when
-        kontroler.wykonajWplate(nrKarty, pin);
+        WplataPieniedzy kontroler = new WplataPieniedzy(model, nrKarty, pin);
 
         // then
         verify(model).logowanieKlient(nrKarty, pin);
@@ -149,7 +137,7 @@ class WplataPieniedzyTest {
         }
 
         // when
-        kontroler.wykonajWplate(NR_KARTY, PIN);
+        WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
 
         // then
         verify(model).logowanieKlient(NR_KARTY, PIN);
@@ -180,18 +168,10 @@ class WplataPieniedzyTest {
 
         // when
         IllegalStateException thrown = assertThrows(IllegalStateException.class,
-                () -> kontroler.wykonajWplate(NR_KARTY, PIN));
+                () -> new WplataPieniedzy(model, NR_KARTY, PIN));
 
         // then
         assertEquals("Błąd księgowania", thrown.getMessage());
         verify(model).ksiegowanieWplaty(anyInt(), anyInt(), anyBoolean(), anyMap());
-    }
-
-    @Order(5)
-    @Test
-    @DisplayName("Powinno tworzyć kontroler przez InjectMocks")
-    void powinnoTworzycKontrolerPrzezInjectMocks() {
-        // then
-        assertNotNull(kontrolerZInjectMocks);
     }
 }

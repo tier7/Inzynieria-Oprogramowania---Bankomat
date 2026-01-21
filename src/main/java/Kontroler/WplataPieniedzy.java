@@ -8,8 +8,8 @@ import java.util.Map;
 public class WplataPieniedzy {
 
 	private final IModel model;
-	private int nrKarty;
-	private int pin;
+	private final int nrKarty;
+	private final int pin;
 
 	private int deklarowanaKwota;
 	private int wartoscBanknotow;
@@ -17,24 +17,11 @@ public class WplataPieniedzy {
 
 	private Map<Integer, Integer> banknoty;
 
-	public WplataPieniedzy(IModel model) {
-		this.model = model;
-		this.nrKarty = 0;
-		this.pin = 0;
-		this.deklarowanaKwota = 0;
-		this.wartoscBanknotow = 0;
-		this.potwierdzenie = false;
-		this.banknoty = new HashMap<>();
-	}
-
 	public WplataPieniedzy(IModel model, int nrKarty, int pin) {
-		this(model);
-		wykonajWplate(nrKarty, pin);
-	}
-
-	public void wykonajWplate(int nrKarty, int pin) {
+		this.model = model;
 		this.nrKarty = nrKarty;
 		this.pin = pin;
+
 		this.deklarowanaKwota = 0;
 		this.wartoscBanknotow = 0;
 		this.potwierdzenie = false;
