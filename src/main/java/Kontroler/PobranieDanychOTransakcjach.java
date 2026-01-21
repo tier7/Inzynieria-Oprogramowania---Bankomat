@@ -2,12 +2,11 @@ package Kontroler;
 
 import Model.IModel;
 import Komunikacja.Widok;
-
 public class PobranieDanychOTransakcjach {
 
-	private final IModel model;
-	private final int nrKarty;
-	private final int pin;
+	private IModel model;
+	private int nrKarty;
+	private int pin;
 
 	private String zakresDat;
 	private String typOperacji;
@@ -21,15 +20,42 @@ public class PobranieDanychOTransakcjach {
 	}
 
 	public PobranieDanychOTransakcjach(IModel model, int nrKarty, int pin) {
+		ustawPoczatkoweWartosci();
 		this.model = model;
 		this.nrKarty = nrKarty;
 		this.pin = pin;
 
+		uruchomProces();
+	}
+
+	public PobranieDanychOTransakcjach() {
+		ustawPoczatkoweWartosci();
+		this.model = null;
+		this.nrKarty = 0;
+		this.pin = 0;
+	}
+
+	public void setModel(IModel model) {
+		if (this.model != null) {
+			this.model = model;
+			return;
+		}
+		this.model = model;
+		uruchomProces();
+	}
+
+	private void ustawPoczatkoweWartosci() {
 		this.zakresDat = "";
 		this.typOperacji = "";
 		this.listaWynikow = new String[0];
 		this.strategiaEksportu = null;
 		this.czyZalogowano = false;
+	}
+
+	private void uruchomProces() {
+		if (model == null) {
+			return;
+		}
 
 		if (!uwierzytelnieniePracownika()) return;
 

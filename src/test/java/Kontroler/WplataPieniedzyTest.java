@@ -132,7 +132,9 @@ class WplataPieniedzyTest {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
         when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(miejsce);
-        when(model.weryfikacjaTransakcjiWBanku(DEKLAROWANA_KWOTA, NR_KARTY)).thenReturn(weryfikacja);
+        if (miejsce) {
+            when(model.weryfikacjaTransakcjiWBanku(DEKLAROWANA_KWOTA, NR_KARTY)).thenReturn(weryfikacja);
+        }
 
         // when
         WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
