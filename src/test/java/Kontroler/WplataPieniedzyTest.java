@@ -55,7 +55,7 @@ class WplataPieniedzyTest {
     private IModel model;
 
     @InjectMocks
-    private WplataPieniedzy kontrolerZInjectMocks;
+    private WplataPieniedzy kontroler;
 
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
@@ -101,7 +101,7 @@ class WplataPieniedzyTest {
         ArgumentCaptor<Map<Integer, Integer>> banknotyCaptor = ArgumentCaptor.forClass(Map.class);
 
         // when
-        WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
+        kontroler.wykonajWplate(NR_KARTY, PIN);
 
         // then
         verify(model).ksiegowanieWplaty(kwotaCaptor.capture(), nrKartyCaptor.capture(),
@@ -127,7 +127,7 @@ class WplataPieniedzyTest {
         when(model.logowanieKlient(nrKarty, pin)).thenReturn(false);
 
         // when
-        WplataPieniedzy kontroler = new WplataPieniedzy(model, nrKarty, pin);
+        kontroler.wykonajWplate(nrKarty, pin);
 
         // then
         verify(model).logowanieKlient(nrKarty, pin);
@@ -149,7 +149,7 @@ class WplataPieniedzyTest {
         }
 
         // when
-        WplataPieniedzy kontroler = new WplataPieniedzy(model, NR_KARTY, PIN);
+        kontroler.wykonajWplate(NR_KARTY, PIN);
 
         // then
         verify(model).logowanieKlient(NR_KARTY, PIN);
@@ -180,7 +180,7 @@ class WplataPieniedzyTest {
 
         // when
         IllegalStateException thrown = assertThrows(IllegalStateException.class,
-                () -> new WplataPieniedzy(model, NR_KARTY, PIN));
+                () -> kontroler.wykonajWplate(NR_KARTY, PIN));
 
         // then
         assertEquals("Błąd księgowania", thrown.getMessage());
