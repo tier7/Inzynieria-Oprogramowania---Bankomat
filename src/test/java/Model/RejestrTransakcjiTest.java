@@ -1,7 +1,5 @@
 package Model;
 
-import Model.IDAO;
-import Model.RejestrTransakcji;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,8 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,7 +50,7 @@ class RejestrTransakcjiTest {
     @Test
     void pobranieWszystkichTransakcjiDomyslne() {
         // given
-        TestDAO dao = new TestDAO();
+        DAO dao = new DAO();
         RejestrTransakcji rejestr = new RejestrTransakcji(dao);
 
         // when
@@ -75,7 +71,7 @@ class RejestrTransakcjiTest {
     })
     void zapisTransakcjiZPotwierdzeniem(String dane, boolean potwierdzenie, String oczekiwanyFragment) {
         // given
-        TestDAO dao = new TestDAO();
+        DAO dao = new DAO();
         RejestrTransakcji rejestr = new RejestrTransakcji(dao);
         int przed = rejestr.pobranieWszystkichTransakcji().length;
 
@@ -85,8 +81,8 @@ class RejestrTransakcjiTest {
 
         // then
         assertEquals(przed + 1, po.length);
-        assertNotNull(dao.lastZaksiegowanie);
-        assertTrue(dao.lastZaksiegowanie.contains(oczekiwanyFragment));
+        assertNotNull(po[po.length - 1]);
+        assertTrue(po[po.length - 1].contains(oczekiwanyFragment));
     }
 
     @Order(3)
@@ -99,7 +95,7 @@ class RejestrTransakcjiTest {
     })
     void zapisTransakcjiBledneDane(String dane) {
         // given
-        TestDAO dao = new TestDAO();
+        DAO dao = new DAO();
         RejestrTransakcji rejestr = new RejestrTransakcji(dao);
 
         // when
@@ -107,51 +103,5 @@ class RejestrTransakcjiTest {
 
         // then
         assertTrue(ex.getMessage().contains("Błędne dane transakcji"));
-    }
-
-    static class TestDAO implements IDAO {
-
-        private String lastZaksiegowanie;
-        private final List<String> logi = new ArrayList<>();
-
-        @Override
-        public boolean uwierzytelnienieKlienta(int nrKarty, int pin) {
-            return false;
-        }
-
-        @Override
-        public boolean uwierzytelnieniePracownika(int nrKarty, int pin) {
-            return false;
-        }
-
-        @Override
-        public int pobranieStanuGotowki() {
-            return 0;
-        }
-
-        @Override
-        public void aktualizacjaStanuGotowki(int kwota) {
-        }
-
-        @Override
-        public boolean zaksiegowanieOperacji(String dane) {
-            this.lastZaksiegowanie = dane;
-            return true;
-        }
-
-        @Override
-        public String[] pobranieLogow() {
-            return logi.toArray(new String[0]);
-        }
-
-        @Override
-        public void zapisanieLogow(String informacje) {
-            logi.add(informacje);
-        }
-
-        @Override
-        public boolean weryfikacjaTransakcjiWBanku(int kwota, int nrKarty) {
-            return kwota > 0 && nrKarty > 0;
-        }
     }
 }
