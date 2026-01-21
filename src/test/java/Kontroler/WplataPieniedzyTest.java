@@ -55,6 +55,7 @@ class WplataPieniedzyTest {
     private IModel model;
 
     @InjectMocks
+    // Mockito wstrzykuje model przez konstruktor bez wykonywania logiki wpłaty.
     private WplataPieniedzy kontroler;
 
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
