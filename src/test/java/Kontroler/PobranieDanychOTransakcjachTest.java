@@ -125,7 +125,9 @@ class PobranieDanychOTransakcjachTest {
     void powinnoRespektowacLogowaniePracownika(boolean czyZalogowano) {
         // given
         when(model.logowaniePracownik(NR_KARTY_FILTROWANIE, PIN_FILTROWANIE)).thenReturn(czyZalogowano);
-        when(model.pobranieWszystkichTransakcji()).thenReturn(new String[0]);
+        if (czyZalogowano) {
+            when(model.pobranieWszystkichTransakcji()).thenReturn(new String[0]);
+        }
 
         // when
         PobranieDanychOTransakcjach kontroler = new PobranieDanychOTransakcjach(
