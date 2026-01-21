@@ -1,6 +1,9 @@
-package test.java.Model;
+package Model;
 
 import Model.Sejf;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -15,6 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,6 +32,13 @@ class SejfTest {
 
     private Map<Integer, Integer> banknoty;
     private Sejf sejf;
+    private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
+
+    @BeforeAll
+    static void setUpBeforeAll() {
+        // given
+        AFTER_EACH_COUNTER.set(0);
+    }
 
     @BeforeEach
     void setUp() {
@@ -35,6 +46,20 @@ class SejfTest {
         banknoty.put(100, 10);
         banknoty.put(50, 5);
         sejf = new Sejf(banknoty);
+    }
+
+    @AfterEach
+    void tearDown() {
+        // then
+        banknoty.clear();
+        sejf = null;
+        AFTER_EACH_COUNTER.incrementAndGet();
+    }
+
+    @AfterAll
+    static void tearDownAfterAll() {
+        // then
+        assertTrue(AFTER_EACH_COUNTER.get() >= 1);
     }
 
     @Order(1)
