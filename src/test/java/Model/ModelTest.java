@@ -1,9 +1,5 @@
 package Model;
 
-import Model.IDAO;
-import Model.Model;
-import Model.RejestrTransakcji;
-import Model.Sejf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -16,14 +12,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Model - logika biznesowa gotówki")
@@ -31,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("gotowka")
 class ModelTest {
 
-    private TestDAO dao;
+    private DAO dao;
     private RejestrTransakcji rejestr;
     private Map<Integer, Integer> banknoty;
     private Sejf sejf;
@@ -39,7 +32,7 @@ class ModelTest {
 
     @BeforeEach
     void setUp() {
-        dao = new TestDAO();
+        dao = new DAO();
         banknoty = new HashMap<>();
         banknoty.put(100, 10);
         banknoty.put(50, 5);
@@ -96,8 +89,8 @@ class ModelTest {
         // then
         assertEquals(przed + 1, po.length);
         assertEquals(12, banknoty.get(100));
-        assertNotNull(dao.lastZaksiegowanie);
-        assertTrue(dao.logi.size() >= 1);
+        assertTrue(po[po.length - 1].contains("Kwota=200"));
+        assertTrue(po[po.length - 1].contains("Nadawca=111111"));
     }
 
     static Stream<Arguments> mapyBanknotow() {
@@ -112,51 +105,5 @@ class ModelTest {
                 Arguments.of(duze, false),
                 Arguments.of(null, true)
         );
-    }
-
-    static class TestDAO implements IDAO {
-
-        private String lastZaksiegowanie;
-        private final List<String> logi = new ArrayList<>();
-
-        @Override
-        public boolean uwierzytelnienieKlienta(int nrKarty, int pin) {
-            return false;
-        }
-
-        @Override
-        public boolean uwierzytelnieniePracownika(int nrKarty, int pin) {
-            return false;
-        }
-
-        @Override
-        public int pobranieStanuGotowki() {
-            return 0;
-        }
-
-        @Override
-        public void aktualizacjaStanuGotowki(int kwota) {
-        }
-
-        @Override
-        public boolean zaksiegowanieOperacji(String dane) {
-            this.lastZaksiegowanie = dane;
-            return true;
-        }
-
-        @Override
-        public String[] pobranieLogow() {
-            return logi.toArray(new String[0]);
-        }
-
-        @Override
-        public void zapisanieLogow(String informacje) {
-            logi.add(informacje);
-        }
-
-        @Override
-        public boolean weryfikacjaTransakcjiWBanku(int kwota, int nrKarty) {
-            return kwota > 0 && nrKarty > 0;
-        }
     }
 }
