@@ -5,15 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Transakcja - pobranie danych")
 @TestMethodOrder(OrderAnnotation.class)
@@ -21,23 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TransakcjaTest {
 
     @Order(1)
-    @DisplayName("Kluczowe pola dla różnych kwot")
-    @ParameterizedTest
-    @ValueSource(ints = {100, 250, 999})
-    void pobranieDanychZawieraKluczowePola(int kwota) {
-        // given
-        Transakcja transakcja = new Transakcja("2025-12-14", "WPLATA", kwota, 111111, 222222, "Bankomat", "Wplata");
-
-        // when
-        String wynik = transakcja.pobranieDanych();
-
-        // then
-        assertNotNull(wynik);
-        assertTrue(wynik.contains("Typ=WPLATA"));
-        assertTrue(wynik.contains("Kwota=" + kwota + " PLN"));
-    }
-
-    @Order(2)
     @DisplayName("Dokładny format danych dla pełnych wejść")
     @ParameterizedTest
     @CsvSource(value = {
@@ -55,18 +34,4 @@ class TransakcjaTest {
         assertEquals(oczekiwane, wynik);
     }
 
-    @Order(3)
-    @DisplayName("Data początkowa i oba konta")
-    @Test
-    void pobranieDanychZawieraKonta() {
-        // given
-        Transakcja transakcja = new Transakcja("2025-12-20", "WPLATA", 300, 123123, 321321, "Adresat", "Tytul");
-
-        // when
-        String wynik = transakcja.pobranieDanych();
-
-        // then
-        assertTrue(wynik.startsWith("[Data=2025-12-20"));
-        assertTrue(wynik.contains("Konto:123123 -> Konto:321321"));
-    }
 }

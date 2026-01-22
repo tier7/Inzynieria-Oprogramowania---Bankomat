@@ -4,16 +4,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("FabrykaTransakcji: tworzenie transakcji")
 @TestMethodOrder(OrderAnnotation.class)
@@ -26,10 +25,12 @@ class FabrykaTransakcjiTest {
     @DisplayName("Tworzenie transakcji dla poprawnych danych")
     @ParameterizedTest
     @CsvSource({
-            "Data=2025-12-14;Typ=WPLATA;Kwota=200;Nadawca=111111;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wplata,200",
-            "Data=2025-12-15;Typ=PRZELEW;Kwota=500;Nadawca=222222;Adresat=333333;NazwaAdresata=Jan;Tytul=Za_obiad,500"
+            "Data=2025-12-14;Typ=WPLATA;Kwota=200;Nadawca=111111;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wplata," +
+                    "[Data=2025-12-14, Typ=WPLATA, Kwota=200 PLN, Konto:111111 -> Konto:0]",
+            "Data=2025-12-15;Typ=PRZELEW;Kwota=500;Nadawca=222222;Adresat=333333;NazwaAdresata=Jan;Tytul=Za_obiad," +
+                    "[Data=2025-12-15, Typ=PRZELEW, Kwota=500 PLN, Konto:222222 -> Konto:333333]"
     })
-    void utworzenieTransakcjiPoprawneDane(String dane, int kwota) {
+    void utworzenieTransakcjiPoprawneDane(String dane, String oczekiwane) {
         // given
 
         // when
@@ -38,7 +39,7 @@ class FabrykaTransakcjiTest {
 
         // then
         assertNotNull(transakcja);
-        assertTrue(opis.contains("Kwota=" + kwota + " PLN"));
+        assertEquals(oczekiwane, opis);
     }
 
     @Order(2)
@@ -59,18 +60,4 @@ class FabrykaTransakcjiTest {
         assertTrue(ex.getMessage().contains("Błędne dane transakcji"));
     }
 
-    @Order(3)
-    @DisplayName("Transakcja z poprawnym formatem danych")
-    @Test
-    void utworzenieTransakcjiFormat() {
-        // given
-        String dane = "Data=2025-12-16;Typ=WYPLATA;Kwota=300;Nadawca=444444;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wyplata";
-
-        // when
-        ITransakcja transakcja = fabryka.utworzenieTransakcji(dane);
-        String opis = transakcja.pobranieDanych();
-
-        // then
-        assertEquals("[Data=2025-12-16, Typ=WYPLATA, Kwota=300 PLN, Konto:444444 -> Konto:0]", opis);
-    }
 }
