@@ -1,8 +1,5 @@
 package Model;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -13,7 +10,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,14 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("dao")
 class DAOTest {
 
-    private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
     private DAO dao;
-
-    @BeforeAll
-    static void setUpBeforeAll() {
-        // given
-        AFTER_EACH_COUNTER.set(0);
-    }
 
     @BeforeEach
     void setUp() {
@@ -39,17 +28,6 @@ class DAOTest {
         dao = new DAO();
     }
 
-    @AfterEach
-    void tearDown() {
-        // then
-        AFTER_EACH_COUNTER.incrementAndGet();
-    }
-
-    @AfterAll
-    static void tearDownAfterAll() {
-        // then
-        assertTrue(AFTER_EACH_COUNTER.get() >= 1);
-    }
 
     @Order(1)
     @DisplayName("Stan początkowy DAO")
