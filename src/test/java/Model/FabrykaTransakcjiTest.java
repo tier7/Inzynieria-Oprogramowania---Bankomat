@@ -24,12 +24,12 @@ class FabrykaTransakcjiTest {
     @Order(1)
     @DisplayName("Tworzenie transakcji dla poprawnych danych")
     @ParameterizedTest
-    @CsvSource({
-            "Data=2025-12-14;Typ=WPLATA;Kwota=200;Nadawca=111111;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wplata," +
-                    "[Data=2025-12-14, Typ=WPLATA, Kwota=200 PLN, Konto:111111 -> Konto:0]",
-            "Data=2025-12-15;Typ=PRZELEW;Kwota=500;Nadawca=222222;Adresat=333333;NazwaAdresata=Jan;Tytul=Za_obiad," +
-                    "[Data=2025-12-15, Typ=PRZELEW, Kwota=500 PLN, Konto:222222 -> Konto:333333]"
-    })
+    @CsvSource(value = {
+            "Data=2025-12-14;Typ=WPLATA;Kwota=200;Nadawca=111111;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wplata" +
+                    "|[Data=2025-12-14, Typ=WPLATA, Kwota=200 PLN, Konto:111111 -> Konto:0]",
+            "Data=2025-12-15;Typ=PRZELEW;Kwota=500;Nadawca=222222;Adresat=333333;NazwaAdresata=Jan;Tytul=Za_obiad" +
+                    "|[Data=2025-12-15, Typ=PRZELEW, Kwota=500 PLN, Konto:222222 -> Konto:333333]"
+    }, delimiter = '|')
     void utworzenieTransakcjiPoprawneDane(String dane, String oczekiwane) {
         // given
 
