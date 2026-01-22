@@ -23,7 +23,7 @@ class FabrykaTransakcjiTest {
     private final FabrykaTransakcji fabryka = new FabrykaTransakcji();
 
     @Order(1)
-    @DisplayName("Powinno tworzyć transakcję dla poprawnych danych")
+    @DisplayName("Tworzenie transakcji dla poprawnych danych")
     @ParameterizedTest
     @CsvSource({
             "Data=2025-12-14;Typ=WPLATA;Kwota=200;Nadawca=111111;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wplata,200",
@@ -42,7 +42,7 @@ class FabrykaTransakcjiTest {
     }
 
     @Order(2)
-    @DisplayName("Powinno rzucać wyjątek dla błędnych danych")
+    @DisplayName("Rzucanie wyjątku dla błędnych danych")
     @ParameterizedTest
     @ValueSource(strings = {
             "Data=2025-12-14;Typ=WPLATA;Kwota=0;Nadawca=111111",
@@ -60,7 +60,7 @@ class FabrykaTransakcjiTest {
     }
 
     @Order(3)
-    @DisplayName("Powinno zwracać transakcję z poprawnym formatem danych")
+    @DisplayName("Zwracanie transakcji z poprawnym formatem danych")
     @Test
     void utworzenieTransakcjiFormat() {
         // given

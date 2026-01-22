@@ -38,7 +38,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Kontroler - WplataPieniedzy (mock)")
+@DisplayName("WplataPieniedzy")
 @TestMethodOrder(OrderAnnotation.class)
 @Tag("kontroler")
 @Tag("mock")
@@ -54,7 +54,7 @@ class WplataPieniedzyTest {
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
     @BeforeAll
-    @DisplayName("Przygotowanie liczników przed wszystkimi testami")
+    @DisplayName("Przygotowanie liczników przed testami")
     static void setUpBeforeAll() {
         // given
         AFTER_EACH_COUNTER.set(0);
@@ -76,8 +76,8 @@ class WplataPieniedzyTest {
 
     @Order(1)
     @Test
-    @DisplayName("Powinno księgować wpłatę w scenariuszu pozytywnym")
-    void powinnoKsiegowacWplateHappyPath() {
+    @DisplayName("Księgowanie wpłaty w scenariuszu pozytywnym")
+    void ksiegowanieWplatyScenariuszPozytywny() {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
         when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(true);
@@ -109,7 +109,7 @@ class WplataPieniedzyTest {
             "111111,1234",
             "222222,9999"
     })
-    @DisplayName("Nie powinno kontynuować bez logowania klienta")
+    @DisplayName("Brak kontynuacji bez logowania")
     void niePowinnoKontynuowacBezLogowania(int nrKarty, int pin) {
         // given
         when(model.logowanieKlient(nrKarty, pin)).thenReturn(false);
@@ -126,9 +126,8 @@ class WplataPieniedzyTest {
     @Order(3)
     @ParameterizedTest(name = "{0}")
     @MethodSource("negatywneScenariusze")
-    @DisplayName("Nie powinno księgować w scenariuszach negatywnych")
-    void niePowinnoKsiegowacWNegatywnychScenariuszach(String opis, boolean miejsce, boolean weryfikacja,
-                                                     int oczekiwaneWeryfikacje) {
+    @DisplayName("Nie księgowanie wpłaty w scenariuszach negatywnych")
+    void ksiegowanieWplatyScenariuszNegatywny(String opis, boolean miejsce, boolean weryfikacja, int oczekiwaneWeryfikacje) {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
         when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(miejsce);
@@ -156,8 +155,8 @@ class WplataPieniedzyTest {
 
     @Order(4)
     @Test
-    @DisplayName("Powinno propagować wyjątek z księgowania wpłaty")
-    void powinnoPropagowacWyjatekZKsiegowaniaWplaty() {
+    @DisplayName("Obsługa wyjątku z księgowania")
+    void wyjatekKsiegowanie() {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
         when(model.sprawdzenieMiejscaNaGotowke(anyMap())).thenReturn(true);

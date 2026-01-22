@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("DAO - prawdziwa implementacja")
+@DisplayName("DAO")
 @TestMethodOrder(OrderAnnotation.class)
 @Tag("dao")
 class DAOTest {
@@ -52,7 +52,7 @@ class DAOTest {
     }
 
     @Order(1)
-    @DisplayName("Powinno zwracać stan początkowy DAO")
+    @DisplayName("Stan początkowy DAO")
     @Test
     void stanPoczatkowyDao() {
         // given
@@ -68,7 +68,7 @@ class DAOTest {
     }
 
     @Order(2)
-    @DisplayName("Powinno weryfikować transakcję w banku")
+    @DisplayName("Weryfikacja transakcji w banku")
     @ParameterizedTest
     @CsvSource({
             "100,111111,true",
@@ -86,7 +86,7 @@ class DAOTest {
     }
 
     @Order(3)
-    @DisplayName("Powinno zapisywać transakcję i zwracać listę")
+    @DisplayName("Zapis transakcji i zwrot listy")
     @Test
     void zapisTransakcjiIOdczytListy() {
         // given

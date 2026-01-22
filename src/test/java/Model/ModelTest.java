@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Model - logika biznesowa gotówki")
+@DisplayName("Model")
 @TestMethodOrder(OrderAnnotation.class)
 @Tag("gotowka")
 class ModelTest {
@@ -64,7 +64,7 @@ class ModelTest {
     }
 
     @Order(1)
-    @DisplayName("Powinno sprawdzać miejsce na gotówkę w sejfie")
+    @DisplayName("Sprawdzanie miejsca na gotówkę w sejfie")
     @ParameterizedTest
     @MethodSource("mapyBanknotow")
     void sprawdzenieMiejscaNaGotowke(Map<Integer, Integer> nowe, boolean oczekiwane) {
@@ -78,7 +78,7 @@ class ModelTest {
     }
 
     @Order(2)
-    @DisplayName("Powinno delegować weryfikację transakcji do DAO")
+    @DisplayName("Delegowanie weryfikacji transakcji do DAO")
     @ParameterizedTest
     @CsvSource({
             "100,111111,true",
@@ -96,7 +96,7 @@ class ModelTest {
     }
 
     @Order(3)
-    @DisplayName("Powinno księgować wpłatę i aktualizować stan")
+    @DisplayName("Księgowanie wpłaty i aktualizowanie stanu")
     @Test
     void ksiegowanieWplatyAktualizujeStan() {
         // given
