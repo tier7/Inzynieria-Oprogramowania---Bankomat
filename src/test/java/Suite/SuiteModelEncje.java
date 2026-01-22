@@ -7,7 +7,7 @@ import org.junit.platform.suite.api.Suite;
 import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
-@SuiteDisplayName("Suite – encje modelu")
+@SuiteDisplayName("Suite encje modelu")
 @SelectPackages("Model")
 @IncludeTags("encje")
 @ExcludeTags({"gotowka", "transakcje", "kontroler", "mock"})

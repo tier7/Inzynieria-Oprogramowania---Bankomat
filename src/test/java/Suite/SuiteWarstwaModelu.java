@@ -5,7 +5,7 @@ import org.junit.platform.suite.api.Suite;
 import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
-@SuiteDisplayName("Suite – encje")
+@SuiteDisplayName("Suite model")
 @SelectPackages("Model")
-public class SuiteWarstwaEncji {
+public class SuiteWarstwaModelu {
 }
