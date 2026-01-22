@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TransakcjaTest {
 
     @Order(1)
-    @DisplayName("Powinno zawierać kluczowe pola dla różnych kwot")
+    @DisplayName("Kluczowe pola dla różnych kwot")
     @ParameterizedTest
     @ValueSource(ints = {100, 250, 999})
     void pobranieDanychZawieraKluczowePola(int kwota) {
@@ -38,7 +38,7 @@ class TransakcjaTest {
     }
 
     @Order(2)
-    @DisplayName("Powinno zwrócić dokładny format danych dla pełnych wejść")
+    @DisplayName("Dokładny format danych dla pełnych wejść")
     @ParameterizedTest
     @CsvSource(value = {
             "2025-01-01|PRZELEW|500|111111|333333|[Data=2025-01-01, Typ=PRZELEW, Kwota=500 PLN, Konto:111111 -> Konto:333333]",
@@ -56,7 +56,7 @@ class TransakcjaTest {
     }
 
     @Order(3)
-    @DisplayName("Powinno zaczynać się od daty i zawierać oba konta")
+    @DisplayName("Data początkowa i oba konta")
     @Test
     void pobranieDanychZawieraKonta() {
         // given
