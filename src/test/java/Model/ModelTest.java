@@ -1,7 +1,5 @@
 package Model;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -16,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("gotowka")
 class ModelTest {
 
-    private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
     private DAO dao;
     private RejestrTransakcji rejestr;
     private Map<Integer, Integer> banknoty;
@@ -43,24 +39,6 @@ class ModelTest {
         sejf = new Sejf(banknoty);
         rejestr = new RejestrTransakcji(dao);
         model = new Model(dao, rejestr, sejf);
-    }
-
-    @BeforeAll
-    static void setUpBeforeAll() {
-        // given
-        AFTER_EACH_COUNTER.set(0);
-    }
-
-    @AfterAll
-    static void tearDownAfterAll() {
-        // then
-        assertTrue(AFTER_EACH_COUNTER.get() >= 1);
-    }
-
-    @org.junit.jupiter.api.AfterEach
-    void tearDown() {
-        // then
-        AFTER_EACH_COUNTER.incrementAndGet();
     }
 
     @Order(1)

@@ -1,9 +1,6 @@
 package Kontroler;
 
 import Model.IModel;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -20,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,29 +46,6 @@ class WplataPieniedzyTest {
 
     @Mock
     private IModel model;
-
-    private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
-
-    @BeforeAll
-    @DisplayName("Przygotowanie liczników")
-    static void setUpBeforeAll() {
-        // given
-        AFTER_EACH_COUNTER.set(0);
-    }
-
-    @AfterEach
-    @DisplayName("Sprzątanie po teście")
-    void tearDown() {
-        // then
-        AFTER_EACH_COUNTER.incrementAndGet();
-    }
-
-    @AfterAll
-    @DisplayName("Weryfikacja sprzątania po testach")
-    static void tearDownAfterAll() {
-        // then
-        assertTrue(AFTER_EACH_COUNTER.get() >= 1);
-    }
 
     @Order(1)
     @Test
