@@ -46,7 +46,7 @@ class RejestrTransakcjiTest {
     }
 
     @Order(1)
-    @DisplayName("Powinno zwrócić wszystkie domyślne transakcje")
+    @DisplayName("Wszystkie domyślne transakcje")
     @Test
     void pobranieWszystkichTransakcjiDomyslne() {
         // given
@@ -63,7 +63,7 @@ class RejestrTransakcjiTest {
     }
 
     @Order(2)
-    @DisplayName("Powinno zapisywać transakcje z opcjonalnym potwierdzeniem")
+    @DisplayName("Zapis transakcji z opcjonalnym potwierdzeniem")
     @ParameterizedTest
     @CsvSource({
             "Data=2025-12-14;Typ=WPLATA;Kwota=200;Nadawca=111111;Adresat=0;NazwaAdresata=Bankomat;Tytul=Wplata,true,SaldoPrzed",
@@ -86,7 +86,7 @@ class RejestrTransakcjiTest {
     }
 
     @Order(3)
-    @DisplayName("Powinno odrzucać błędne dane transakcji")
+    @DisplayName("Odrzucenie błędnych danych transakcji")
     @ParameterizedTest
     @ValueSource(strings = {
             "Data=2025-12-14;Typ=WPLATA;Kwota=0;Nadawca=111111",

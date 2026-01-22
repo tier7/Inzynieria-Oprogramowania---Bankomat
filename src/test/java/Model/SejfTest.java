@@ -63,7 +63,7 @@ class SejfTest {
     }
 
     @Order(1)
-    @DisplayName("Powinno sprawdzać dostępne miejsce w sejfie")
+    @DisplayName("Sprawdzenie dostępnego miejsca w sejfie")
     @ParameterizedTest
     @CsvSource({
             "10,true",
@@ -80,7 +80,7 @@ class SejfTest {
     }
 
     @Order(2)
-    @DisplayName("Powinno weryfikować dostępność nominałów")
+    @DisplayName("Weryfikacja dostępności nominałów")
     @ParameterizedTest
     @MethodSource("kwotyINominaly")
     void czySaNominalyDlaKwoty(int kwota, boolean oczekiwane) {
@@ -94,7 +94,7 @@ class SejfTest {
     }
 
     @Order(3)
-    @DisplayName("Powinno aktualizować stan sejfu po dodaniu banknotów")
+    @DisplayName("Aktualizacja stanu sejfu po dodaniu banknotów")
     @Test
     void aktualizacjaStanuDodajeBanknoty() {
         // given
@@ -112,7 +112,7 @@ class SejfTest {
     }
 
     @Order(4)
-    @DisplayName("Powinno ignorować brak nowych banknotów")
+    @DisplayName("Ignorowanie braku nowych banknotów")
     @Test
     void aktualizacjaStanuPustaMapa() {
         // given

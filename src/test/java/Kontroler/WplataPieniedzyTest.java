@@ -54,21 +54,21 @@ class WplataPieniedzyTest {
     private static final AtomicInteger AFTER_EACH_COUNTER = new AtomicInteger(0);
 
     @BeforeAll
-    @DisplayName("Przygotowanie liczników przed testami")
+    @DisplayName("Przygotowanie liczników")
     static void setUpBeforeAll() {
         // given
         AFTER_EACH_COUNTER.set(0);
     }
 
     @AfterEach
-    @DisplayName("Sprzątanie po pojedynczym teście")
+    @DisplayName("Sprzątanie po teście")
     void tearDown() {
         // then
         AFTER_EACH_COUNTER.incrementAndGet();
     }
 
     @AfterAll
-    @DisplayName("Weryfikacja sprzątania po wszystkich testach")
+    @DisplayName("Weryfikacja sprzątania po testach")
     static void tearDownAfterAll() {
         // then
         assertTrue(AFTER_EACH_COUNTER.get() >= 1);
@@ -76,7 +76,7 @@ class WplataPieniedzyTest {
 
     @Order(1)
     @Test
-    @DisplayName("Księgowanie wpłaty w scenariuszu pozytywnym")
+    @DisplayName("Pozytywny scenariusz księgowania wpłaty")
     void ksiegowanieWplatyScenariuszPozytywny() {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
@@ -126,7 +126,7 @@ class WplataPieniedzyTest {
     @Order(3)
     @ParameterizedTest(name = "{0}")
     @MethodSource("negatywneScenariusze")
-    @DisplayName("Nie księgowanie wpłaty w scenariuszach negatywnych")
+    @DisplayName("Brak księgowania w scenariuszach negatywnych")
     void ksiegowanieWplatyScenariuszNegatywny(String opis, boolean miejsce, boolean weryfikacja, int oczekiwaneWeryfikacje) {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);
@@ -155,7 +155,7 @@ class WplataPieniedzyTest {
 
     @Order(4)
     @Test
-    @DisplayName("Obsługa wyjątku z księgowania")
+    @DisplayName("Obsługa wyjątku podczas księgowania")
     void wyjatekKsiegowanie() {
         // given
         when(model.logowanieKlient(NR_KARTY, PIN)).thenReturn(true);

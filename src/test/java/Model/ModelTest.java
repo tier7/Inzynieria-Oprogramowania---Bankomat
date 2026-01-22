@@ -64,7 +64,7 @@ class ModelTest {
     }
 
     @Order(1)
-    @DisplayName("Sprawdzanie miejsca na gotówkę w sejfie")
+    @DisplayName("Sprawdzenie miejsca na gotówkę w sejfie")
     @ParameterizedTest
     @MethodSource("mapyBanknotow")
     void sprawdzenieMiejscaNaGotowke(Map<Integer, Integer> nowe, boolean oczekiwane) {
@@ -96,7 +96,7 @@ class ModelTest {
     }
 
     @Order(3)
-    @DisplayName("Księgowanie wpłaty i aktualizowanie stanu")
+    @DisplayName("Księgowanie wpłaty i aktualizacja stanu")
     @Test
     void ksiegowanieWplatyAktualizujeStan() {
         // given

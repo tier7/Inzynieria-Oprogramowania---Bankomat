@@ -42,7 +42,7 @@ class FabrykaTransakcjiTest {
     }
 
     @Order(2)
-    @DisplayName("Rzucanie wyjątku dla błędnych danych")
+    @DisplayName("Wyjątek dla błędnych danych")
     @ParameterizedTest
     @ValueSource(strings = {
             "Data=2025-12-14;Typ=WPLATA;Kwota=0;Nadawca=111111",
@@ -60,7 +60,7 @@ class FabrykaTransakcjiTest {
     }
 
     @Order(3)
-    @DisplayName("Zwracanie transakcji z poprawnym formatem danych")
+    @DisplayName("Transakcja z poprawnym formatem danych")
     @Test
     void utworzenieTransakcjiFormat() {
         // given
