@@ -71,10 +71,6 @@ public class Sejf {
 				"Dodano banknotów: " + dodane + ", nowa ilość: " + this.iloscBanknotow);
 	}
 
-	/**
-	 * Metoda pomocnicza dodana na potrzeby testów akceptacyjnych (FitNesse).
-	 * Zwraca aktualną liczbę wszystkich banknotów w sejfie (stan warstwy encji).
-	 */
 	public int dajIloscBanknotow() {
 		return this.iloscBanknotow;
 	}

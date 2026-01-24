@@ -12,29 +12,17 @@ import fit.Fixture;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * FitNesse - SetUp.
- *
- * SetUp inicjalizuje obiekty systemu (łańcuch zależności) i udostępnia je jako pola statyczne,
- * aby klasy testów (ColumnFixture) mogły:
- *  - wywołać operację realizacji PU w warstwie kontroli,
- *  - sprawdzić stan warstwy encji (np. sejf/rejestr) przed i po wykonaniu PU.
- */
 public class SetUp extends Fixture {
 
-    // Warstwa danych / encji
     public static IDAO dao;
     public static Sejf sejf;
     public static RejestrTransakcji rejestr;
 
-    // Warstwa modelu
     public static IModel model;
 
-    // Warstwa kontroli (wywołujemy PU możliwie "jak najwyżej")
     public static KontrolerKlienta kontrolerKlienta;
 
     public SetUp() {
-        // Stan początkowy sejfu – łącznie 160 banknotów
         Map<Integer, Integer> startoweBanknoty = new HashMap<>();
         startoweBanknoty.put(100, 50);
         startoweBanknoty.put(50, 100);
