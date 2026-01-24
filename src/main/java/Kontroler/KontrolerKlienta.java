@@ -3,6 +3,7 @@ package Kontroler;
 import Model.IModel;
 import Komunikacja.Widok;
 
+import java.util.Map;
 
 public class KontrolerKlienta implements IKontrolerKlienta {
 
@@ -16,6 +17,13 @@ public class KontrolerKlienta implements IKontrolerKlienta {
 	public void wplataPieniedzy(int nrKarty, int pin) {
 		Widok.wyswietlanie("KontrolerKlienta", "wplataPieniedzy", true, "Wybrano opcję 'Wpłata pieniędzy'.");
 		new WplataPieniedzy(this.model, nrKarty, pin);
+	}
+
+	public void wplataPieniedzy(int nrKarty, int pin, int deklarowanaKwota,
+								Map<Integer, Integer> banknoty, boolean potwierdzenie) {
+		Widok.wyswietlanie("KontrolerKlienta", "wplataPieniedzy", true,
+				"Wybrano opcję 'Wpłata pieniędzy' (parametryzowana – testy akceptacyjne).");
+		new WplataPieniedzy(this.model, nrKarty, pin, deklarowanaKwota, banknoty, potwierdzenie);
 	}
 
 	@Override

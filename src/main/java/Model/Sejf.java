@@ -10,7 +10,6 @@ public class Sejf {
 	private int iloscBanknotow;
 	private int limitPojemnosci;
 
-
 	public Sejf(Map<Integer, Integer> banknoty) {
 		this.banknoty = banknoty;
 		this.limitPojemnosci = 2500;
@@ -18,7 +17,6 @@ public class Sejf {
 		for (int ilosc : banknoty.values()) this.iloscBanknotow += ilosc;
 		Widok.wyswietlanie("Sejf", "Sejf", true, "Zainicjalizowano sejf, ilość banknotów w sejfie: " + this.iloscBanknotow);
 	}
-
 
 	public boolean czyMiejsce(int iloscNowychBanknotow) {
 		int wolneMiejsce = limitPojemnosci - iloscBanknotow;
@@ -50,7 +48,6 @@ public class Sejf {
 		return ok;
 	}
 
-
 	public void aktualizacjaStanu(Map<Integer, Integer> noweBanknoty) {
 		if (noweBanknoty == null || noweBanknoty.isEmpty()) {
 			Widok.wyswietlanie("Sejf", "aktualizacjaStanu", true, "Brak nowych banknotów do dodania");
@@ -72,5 +69,13 @@ public class Sejf {
 
 		Widok.wyswietlanie("Sejf", "aktualizacjaStanu", true,
 				"Dodano banknotów: " + dodane + ", nowa ilość: " + this.iloscBanknotow);
+	}
+
+	/**
+	 * Metoda pomocnicza dodana na potrzeby testów akceptacyjnych (FitNesse).
+	 * Zwraca aktualną liczbę wszystkich banknotów w sejfie (stan warstwy encji).
+	 */
+	public int dajIloscBanknotow() {
+		return this.iloscBanknotow;
 	}
 }

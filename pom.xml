@@ -57,7 +57,15 @@
             <artifactId>javax.inject</artifactId>
             <version>1</version>
         </dependency>
+        <dependency>
+            <groupId>org.fitnesse</groupId>
+            <artifactId>fitnesse-standalone</artifactId>
+            <version>0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/fitnesse-standalone.jar</systemPath>
+        </dependency>
     </dependencies>
+
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>

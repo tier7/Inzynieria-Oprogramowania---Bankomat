@@ -52,8 +52,21 @@ public class RejestrTransakcji {
 		dao.zaksiegowanieOperacji(dane);
 	}
 
+	/**
+	 * Metody pomocnicze dodane na potrzeby testów akceptacyjnych (FitNesse).
+	 * Pozwalają sprawdzić stan warstwy encji (rejestru) przed i po wykonaniu PU.
+	 */
+	public int dajLiczbeTransakcji() {
+		return this.transakcje.size();
+	}
 
-
+	public String dajDaneOstatniejTransakcji() {
+		String last = "";
+		for (ITransakcja t : this.transakcje) {
+			last = t.pobranieDanych();
+		}
+		return last;
+	}
 
 	private int wyciagnijKwote(String daneBazowe) {
 
@@ -67,5 +80,4 @@ public class RejestrTransakcji {
 		} catch (Exception ignored) {}
 		return 0;
 	}
-
 }
