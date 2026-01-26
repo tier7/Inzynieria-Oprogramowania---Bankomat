@@ -18,14 +18,9 @@ public class WplataPieniedzy {
 	private Map<Integer, Integer> banknoty;
 
 	public WplataPieniedzy(IModel model, int nrKarty, int pin) {
-		// Konstruktor domyślny – zachowuje stare zachowanie.
 		this(model, nrKarty, pin, 1200, domyslneBanknoty(), true);
 	}
 
-	/**
-	 * Konstruktor używany w testach akceptacyjnych (FitNesse).
-	 * Pozwala parametryzować przebieg PU02. Wpłata pieniędzy (kwota, banknoty, potwierdzenie).
-	 */
 	public WplataPieniedzy(IModel model, int nrKarty, int pin,
 						   int deklarowanaKwota,
 						   Map<Integer, Integer> banknoty,
@@ -44,13 +39,11 @@ public class WplataPieniedzy {
 		this.wprowadzenieKwoty(deklarowanaKwota);
 		this.wprowadzenieBanknotow(banknoty);
 
-		// PU10 – weryfikacja zawartości gotówki bankomatu (miejsce na banknoty)
 		if (!this.model.sprawdzenieMiejscaNaGotowke(this.banknoty)) {
 			this.zwrotBanknotow();
 			return;
 		}
 
-		// sprawdzenie spójności – czy suma banknotów = deklarowana kwota
 		this.wartoscBanknotow = this.przeliczenieWartosciBanknotow();
 		boolean czyRowne = (this.deklarowanaKwota == this.wartoscBanknotow);
 		if (!czyRowne) {
@@ -58,7 +51,6 @@ public class WplataPieniedzy {
 			return;
 		}
 
-		// PU11 – weryfikacja operacji przez system bankowy
 		boolean czyZweryfikowano = this.model.weryfikacjaTransakcjiWBanku(this.deklarowanaKwota, this.nrKarty);
 		if (!czyZweryfikowano) {
 			this.zwrotBanknotow();
@@ -107,7 +99,7 @@ public class WplataPieniedzy {
 	}
 
 	private void zwrotBanknotow() {
-		// zwrot wprowadzonych banknotów do klienta (tu tylko symulacja)
+		// zwrot banknotow
 	}
 
 	private void drukowaniePotwierdzenia() {
